@@ -1,0 +1,11 @@
+Location,Latitude,Longitude,Customer Count,Avg Monthly Revenue,Network Performance Score,Predicted Churn Risk,Recommended Action
+New York,40.7128,-74.0060,1000,50,8,0.1,High Priority
+Los Angeles,34.0522,-118.2437,1200,45,7,0.15,Medium Priority
+Chicago,41.8781,-87.6298,1100,55,9,0.2,Low Priority
+Houston,29.7604,-95.3698,900,60,6,0.25,High Priority
+Phoenix,33.4484,-112.0740,850,40,5,0.1,Medium Priority
+Philadelphia,39.9526,-75.1652,950,50,7,0.05,Medium Priority
+San Antonio,29.4241,-98.4936,800,30,6,0.3,High Priority
+San Diego,32.7157,-117.1611,750,35,8,0.2,Low Priority
+Dallas,32.7767,-96.7970,700,45,7,0.15,Medium Priority
+San Jose,37.3382,-121.8863,650,50,7,0.1,Low Priority
