@@ -8,7 +8,6 @@ import plotly.express as px
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import IsolationForest
-from my import XGBClassifier
 from prophet import Prophet
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
