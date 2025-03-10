@@ -6,3 +6,4 @@ seaborn
 folium
 textblob
 tweepy
+streamlit_folium
