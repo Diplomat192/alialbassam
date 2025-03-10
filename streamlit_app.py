@@ -68,6 +68,17 @@ def display_kpis():
 
 display_kpis()
 
+
+st.subheader("📊 Feature Importance in Churn Prediction")
+
+# Explain the model's predictions
+explainer = shap.Explainer(model)
+shap_values = explainer(X_test)
+
+# Plot SHAP summary
+fig, ax = plt.subplots()
+shap.summary_plot(shap_values, X_test, show=False)
+st.pyplot(fig)
 # 📉 Churn Risk vs. Investment Chart
 st.subheader("📉 Scenario Analysis: Network Investment Impact")
 investment_levels = np.linspace(0, 500000, 100)
