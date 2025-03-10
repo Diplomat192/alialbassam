@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import folium
-import shap
 import matplotlib.pyplot as plt
 from streamlit_folium import folium_static
 import plotly.express as px
@@ -73,24 +72,11 @@ display_kpis()
 
 st.subheader("📊 Feature Importance in Churn Prediction")
 
-# Explain the model's predictions
-explainer = shap.Explainer(model)
-shap_values = explainer(X_test)
+st.subheader("🗣️ Sentiment Score vs. Churn Risk")
 
-# Plot SHAP summary
-fig, ax = plt.subplots()
-shap.summary_plot(shap_values, X_test, show=False)
-st.pyplot(fig)
-# 📉 Churn Risk vs. Investment Chart
-st.subheader("📉 Scenario Analysis: Network Investment Impact")
-investment_levels = np.linspace(0, 500000, 100)
-fig = px.line()
-for location in filtered_data['Location'].unique():
-    churn_risk = filtered_data.loc[filtered_data['Location'] == location, 'Predicted Churn Risk'].values[0]
-    customer_count = filtered_data.loc[filtered_data['Location'] == location, 'Customer Count'].values[0]
-    forecasted_churn_reduction = churn_risk * (1 - (investment_levels / 1000000))
-    churn_reduction = forecasted_churn_reduction * customer_count
-    fig.add_scatter(x=investment_levels, y=churn_reduction, mode='lines', name=location)
+fig = px.scatter(filtered_data, x="Sentiment Score", y="Predicted Churn Risk",
+                 color="Revenue at Risk", size="Customer Count",
+                 hover_name="Location", title="Impact of Customer Sentiment on Churn Probability")
 st.plotly_chart(fig)
 
 # 📈 Clustering Churn Risk
