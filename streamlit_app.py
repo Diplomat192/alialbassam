@@ -15,7 +15,7 @@ from sklearn.metrics import accuracy_score
 # Configure Streamlit UI
 st.set_page_config(layout="wide")
 st.image("https://www.c3.ai/wp-content/uploads/2020/10/c3ai-logo.svg", width=200)
-st.title("C3AI Telecom Churn Management")
+st.title("C3AI Telecom Churn Management System")
 st.write("Leverage AI and ML insights to manage telecom churn risk effectively.")
 
 # Define dataset ONCE
