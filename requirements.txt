@@ -7,3 +7,4 @@ folium
 textblob
 tweepy
 streamlit_folium
+plotly
