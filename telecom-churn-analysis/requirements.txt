@@ -1,9 +1,5 @@
+streamlit
 pandas
 numpy
 matplotlib
 seaborn
-folium
-tweepy
-textblob
-smtplib
-email

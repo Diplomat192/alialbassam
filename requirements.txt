@@ -8,3 +8,6 @@ textblob
 tweepy
 streamlit_folium
 plotly
+scikit-learn
+xgboost
+prophet
