@@ -12,6 +12,15 @@ from prophet import Prophet
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
+# 📌 **Create Tabs for Different Sections**
+tab1, tab2, tab3 = st.tabs(["📊 AI-Powered Insights", "⚡ Workflow Actions", "📈 Workflow Status Overview"])
+
+# --------------------------------------------
+# 📊 **Tab 1: AI-Powered Churn Risk Insights**
+# --------------------------------------------
+with tab1:
+    st.title("📊 AI-Powered Executive Workflow Action Center")
+    st.write("Leverage AI-driven insights to make instant strategic decisions.")
 
 # Streamlit UI Configuration
 st.set_page_config(layout="wide")
@@ -172,3 +181,68 @@ fig = px.line(forecast, x='ds', y='yhat', title="Churn Risk Forecast",
               labels={'ds': 'Date', 'yhat': 'Predicted Churn Probability'})
 st.plotly_chart(fig)
 
+ 
+# --------------------------------------------
+# ⚡ **Tab 2: Executive Decision Panel**
+# --------------------------------------------
+with tab2:
+    st.subheader("🛠 AI-Driven Executive Decision Panel")
+
+    # **Executive Decision Workflow**
+    workflow_data = data.copy()
+    workflow_data['Assigned Team'] = ['Network Ops', 'Marketing', 'Sales', 'Finance', 'Customer Support']
+    workflow_data['Status'] = ['Pending'] * len(data)
+
+    # Editable Data Table
+    edited_data = st.data_editor(workflow_data, num_rows="dynamic", height=300)
+
+    # 📌 **One-Click Executive Actions**
+    st.subheader("⚡ Take Instant Action")
+    col1, col2, col3 = st.columns(3)
+
+    if col1.button("✅ Approve AI Recommendations"):
+        edited_data['Status'] = "Approved"
+        st.success("All AI-recommended actions have been approved!")
+
+    if col2.button("🚨 Escalate High-Risk Locations"):
+        edited_data.loc[edited_data['Churn Risk'] > 0.4, 'Status'] = "Escalated"
+        st.warning("High-risk locations have been escalated!")
+
+    if col3.button("🕒 Defer Low-Risk Actions"):
+        edited_data.loc[edited_data['Churn Risk'] < 0.35, 'Status'] = "Deferred"
+        st.info("Low-risk actions have been deferred.")
+
+    # 📥 **Download Updated Workflow**
+    st.download_button(
+        label="📥 Download Workflow Data",
+        data=edited_data.to_csv(index=False),
+        file_name='executive_workflow.csv',
+        mime='text/csv'
+    )
+
+# --------------------------------------------
+# 📈 **Tab 3: Workflow Status Overview**
+# --------------------------------------------
+with tab3:
+    st.subheader("📊 Workflow Status Overview")
+
+    # Count the status categories
+    status_counts = edited_data['Status'].value_counts()
+
+    # 📊 **Pie Chart: Workflow Status Distribution**
+    fig, ax = plt.subplots(figsize=(5, 5))
+    ax.pie(status_counts, labels=status_counts.index, autopct='%1.1f%%', startangle=90, colors=['#4CAF50', '#FF9800', '#F44336'])
+    ax.set_title("Workflow Task Distribution")
+    st.pyplot(fig)
+
+    # 📊 **Bar Chart: Workflow Task Status**
+    fig = px.bar(
+        status_counts.reset_index(),
+        x='index',
+        y='Status',
+        color='index',
+        title="Task Status Distribution",
+        labels={'index': 'Task Status', 'Status': 'Count'},
+        text_auto=True
+    )
+    st.plotly_chart(fig)
