@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import folium import sklearn 
+import folium
 from streamlit_folium import folium_static
 import plotly.express as px
 from sklearn.cluster import KMeans
