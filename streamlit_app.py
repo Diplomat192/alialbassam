@@ -106,6 +106,21 @@ for _, row in filtered_data.iterrows():
 folium_static(m)
 
 
+# Streamlit UI
+st.title("💰 Investment Optimization")
+st.write("Optimizing investment to reduce churn risk.")
+
+# Define Investment Levels
+investment_levels = np.linspace(0, 500000, 10)  # 10 evenly spaced investment levels
+
+# Simulate Rewards (Churn Reduction)
+rewards = [np.clip(0.05 * (i / 500000), 0, 0.5) for i in investment_levels]  # Scaled effect
+
+# Plot the results
+fig = px.bar(x=investment_levels, y=rewards, labels={'x': 'Investment ($)', 'y': 'Churn Reduction'},
+             title="Optimized Investment for Churn Reduction")
+
+st.plotly_chart(fig)
 # AI-Powered Churn Prediction
 st.subheader("🧠 AI-Powered Churn Prediction")
 X = data[['Network Performance Score', 'Revenue at Risk', 'Sentiment Score']]
