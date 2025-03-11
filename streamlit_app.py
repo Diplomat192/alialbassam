@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-# If you need both folium and sklearn:
 import folium
 import sklearn
 from streamlit_folium import folium_static
