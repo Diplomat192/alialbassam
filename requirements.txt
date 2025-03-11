@@ -11,3 +11,6 @@ plotly
 scikit-learn
 xgboost
 prophet
+gym
+tensorflow
+keras
