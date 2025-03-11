@@ -130,8 +130,36 @@ model = XGBClassifier()
 model.fit(X_train, y_train)
 accuracy = accuracy_score(y_test, model.predict(X_test))
 st.write(f"Model Accuracy: **{accuracy * 100:.2f}%**")
+# Streamlit UI
+st.title("🧠 Customer Lifetime Value (CLV) Prediction")
+st.write("Predicting customer revenue potential.")
 
+# Sample data
+data = pd.DataFrame({
+    'Location': ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'],
+    'Churn Risk': np.random.uniform(0.1, 0.5, 5),
+    'Network Performance': np.random.randint(3, 10, 5),
+    'Revenue at Risk': np.random.randint(50000, 150000, 5)
+})
 
+# Create target variable (Simulated CLV)
+data['CLV'] = np.random.uniform(500, 5000, len(data))
+
+# Train XGBoost CLV Model
+X = data[['Churn Risk', 'Network Performance', 'Revenue at Risk']]
+y = data['CLV']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+model = XGBRegressor()
+model.fit(X_train, y_train)
+
+# Predict CLV
+data['Predicted CLV'] = model.predict(X)
+
+# Visualize CLV vs Churn Risk
+fig = px.scatter(data, x="Churn Risk", y="Predicted CLV", color="Network Performance",
+                 title="Predicted CLV vs. Churn Risk")
+
+st.plotly_chart(fig)
 # Forecasting Churn Probability
 st.subheader("📈 Churn Probability Forecasting")
 churn_data = pd.DataFrame({'ds': pd.date_range(start='2024-01-01', periods=12, freq='M'),
