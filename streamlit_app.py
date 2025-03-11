@@ -12,11 +12,13 @@ from prophet import Prophet
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
+
 # Streamlit UI Configuration
 st.set_page_config(layout="wide")
-st.image("https://www.c3.ai/wp-content/uploads/2020/10/c3ai-logo.svg", width=200)
+st.image("c3-logo-70-127.png", width=200)
 st.title("C3AI Telecom Churn Management")
 st.write("Leverage AI and ML insights to manage telecom churn risk effectively.")
+
 
 # Define dataset ONCE
 data = pd.DataFrame({
@@ -33,9 +35,11 @@ data = pd.DataFrame({
     'Sentiment Score': [0.8, 0.3, -0.2, 0.5, -0.6, 0.4, 0.2, -0.1, 0.6, -0.3]
 })
 
+
 # Add calculated columns
 data['Revenue at Risk'] = data['Customer Count'] * data['Avg Monthly Revenue'] * data['Predicted Churn Risk']
 data['Revenue Protected'] = data['Revenue at Risk'] * (1 - data['Predicted Churn Risk'])
+
 
 # Sidebar Filters
 st.sidebar.header("Filters")
@@ -43,11 +47,13 @@ location_filter = st.sidebar.multiselect("Location", data['Location'].unique(), 
 action_filter = st.sidebar.multiselect("Recommended Action", data['Recommended Action'].unique(), data['Recommended Action'].unique())
 performance_filter = st.sidebar.slider("Network Performance Score", 1, 10, (5, 9))
 
+
 filtered_data = data[
     (data['Location'].isin(location_filter)) &
     (data['Recommended Action'].isin(action_filter)) &
     (data['Network Performance Score'].between(performance_filter[0], performance_filter[1]))
 ]
+
 
 # Function to display KPIs
 def display_kpis():
@@ -63,7 +69,9 @@ def display_kpis():
     for col, name, value in zip(cols, ['Avg Monthly Revenue', 'Revenue at Risk', 'Revenue Protected', 'Avg Network Performance', 'Avg Churn Probability'], kpis):
         col.metric(name, value)
 
+
 display_kpis()
+
 
 # Scenario Analysis - Investment vs. Churn Risk Reduction
 st.subheader("📉 Scenario Analysis: Network Investment Impact")
@@ -76,11 +84,13 @@ for location in filtered_data['Location'].unique():
     fig.add_scatter(x=investment_levels, y=churn_reduction, mode='lines', name=location)
 st.plotly_chart(fig)
 
+
 # Churn Risk Clusters
 st.subheader("📈 Churn Risk Clusters")
 fig = px.scatter(filtered_data, x="Network Performance Score", y="Predicted Churn Risk", size="Customer Count", color="Revenue at Risk",
                  hover_name="Location", title="Churn Risk Clusters")
 st.plotly_chart(fig)
+
 
 # Churn Risk Map
 st.subheader("🌍 Churn Risk Map")
@@ -95,6 +105,7 @@ for _, row in filtered_data.iterrows():
     ).add_to(m)
 folium_static(m)
 
+
 # AI-Powered Churn Prediction
 st.subheader("🧠 AI-Powered Churn Prediction")
 X = data[['Network Performance Score', 'Revenue at Risk', 'Sentiment Score']]
@@ -104,6 +115,7 @@ model = XGBClassifier()
 model.fit(X_train, y_train)
 accuracy = accuracy_score(y_test, model.predict(X_test))
 st.write(f"Model Accuracy: **{accuracy * 100:.2f}%**")
+
 
 # Forecasting Churn Probability
 st.subheader("📈 Churn Probability Forecasting")
@@ -116,3 +128,4 @@ forecast = prophet_model.predict(future)
 fig = px.line(forecast, x='ds', y='yhat', title="Churn Risk Forecast",
               labels={'ds': 'Date', 'yhat': 'Predicted Churn Probability'})
 st.plotly_chart(fig)
+
